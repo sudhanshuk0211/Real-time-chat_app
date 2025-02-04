@@ -6,43 +6,44 @@ const Navbar = () => {
   const { logout, authUser } = useAuthStore();
 
   return (
-    <header
-      className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 
-    backdrop-blur-lg bg-base-100/80"
-    >
-      <div className="container mx-auto px-4 h-16">
-        <div className="flex items-center justify-between h-full">
-          <div className="flex items-center gap-8">
+    <header className="bg-white shadow-md fixed w-full top-0 z-40 backdrop-blur-lg bg-base-100/80">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          {/* Left Section - Logo */}
+          <div className="flex items-center gap-6">
             <Link to="/" className="flex items-center gap-2.5 hover:opacity-80 transition-all">
-              <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                 <MessageSquare className="w-5 h-5 text-primary" />
               </div>
-              <h1 className="text-lg font-bold">Chatty</h1>
+              <h1 className="text-2xl font-semibold text-gray-800">ChatSphere</h1>
             </Link>
           </div>
 
-          <div className="flex items-center gap-2">
+          {/* Right Section - Navigation Links & Auth */}
+          <div className="flex items-center gap-4">
             <Link
               to={"/settings"}
-              className={`
-              btn btn-sm gap-2 transition-colors
-              
-              `}
+              className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-primary/10 transition-all"
             >
-              <Settings className="w-4 h-4" />
-              <span className="hidden sm:inline">Settings</span>
+              <Settings className="w-5 h-5 text-gray-600" />
+              <span className="text-sm text-gray-600 hidden sm:inline">Settings</span>
             </Link>
 
             {authUser && (
               <>
-                <Link to={"/profile"} className={`btn btn-sm gap-2`}>
-                  <User className="size-5" />
-                  <span className="hidden sm:inline">Profile</span>
+                {/* Profile Link */}
+                <Link to={"/profile"} className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-primary/10 transition-all">
+                  <User className="w-5 h-5 text-gray-600" />
+                  <span className="text-sm text-gray-600 hidden sm:inline">Profile</span>
                 </Link>
 
-                <button className="flex gap-2 items-center" onClick={logout}>
-                  <LogOut className="size-5" />
-                  <span className="hidden sm:inline">Logout</span>
+                {/* Logout Button */}
+                <button
+                  className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-red-500/10 transition-all"
+                  onClick={logout}
+                >
+                  <LogOut className="w-5 h-5 text-red-600" />
+                  <span className="text-sm text-red-600 hidden sm:inline">Logout</span>
                 </button>
               </>
             )}
@@ -52,4 +53,5 @@ const Navbar = () => {
     </header>
   );
 };
+
 export default Navbar;
