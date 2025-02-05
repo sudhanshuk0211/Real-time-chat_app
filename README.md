@@ -41,8 +41,8 @@ Ensure you have the following installed:
      JWT_SECRET=your_secret_key
      ```
 3. **Run the application**
-   npm build
-   npm start
+  - npm build
+  - npm start
    
 
 ## Future Improvements
