@@ -29,7 +29,7 @@ Ensure you have the following installed:
 ### Steps
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/real-time-chat-app.git
+   https://github.com/sudhanshuk0211/Real-time-chat_app.git
    cd real-time-chat-app
    ```
 
