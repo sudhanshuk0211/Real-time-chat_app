@@ -1,111 +1,103 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
+import BorderAnimatedContainer from "../components/BorderAnimatedContainer";
+import { MessageCircle, Mail, Loader2, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
 
 const LoginPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const { login, isLoggingIn } = useAuthStore();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     login(formData);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="flex flex-col items-center gap-2">
-            <div
-              className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20
-              transition-colors"
-            >
-              <Mail className="w-6 h-6 text-primary" />
-            </div>
-            <h1 className="text-3xl font-semibold mt-2 text-gray-800">Welcome Back</h1>
-            <p className="text-base text-gray-500">Sign in to your account</p>
-          </div>
-        </div>
+    <div className="h-screen w-full flex items-center justify-center p-4 bg-slate-900">
+      <div className="relative w-full max-w-6xl md:h-[650px] h-[580px]">
+        <BorderAnimatedContainer>
+          <div className="w-full h-full flex flex-col md:flex-row">
+            {/* Form column */}
+            <div className="md:w-1/2 p-8 flex items-center justify-center md:border-r border-slate-600/30">
+              <div className="w-full max-w-sm">
+                {/* Heading */}
+                <div className="text-center mb-8">
+                  <MessageCircle className="w-12 h-12 mx-auto text-slate-400 mb-4" />
+                  <h2 className="text-2xl font-bold text-slate-200 mb-2">Welcome Back</h2>
+                  <p className="text-slate-400">Login to access to your account</p>
+                </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text font-medium">Email</span>
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Mail className="h-5 w-5 text-gray-400" />
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label className="auth-input-label">Email</label>
+                    <div className="relative">
+                      <Mail className="auth-input-icon" />
+                      <input
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="input auth-input"
+                        placeholder="Sudhanshu k"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="auth-input-label">Password</label>
+                    <div className="relative">
+                      <Lock className="auth-input-icon" />
+                      <input
+                        type="password"
+                        value={formData.password}
+                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                        className="input auth-input"
+                        placeholder="Enter your password"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <button className="auth-btn" type="submit" disabled={isLoggingIn}>
+                    {isLoggingIn ? (
+                      <Loader2 className="w-full h-5 animate-spin text-center" />
+                    ) : (
+                      "Sign In"
+                    )}
+                  </button>
+                </form>
+
+                <div className="mt-6 text-center">
+                  <Link to="/signup" className="auth-link">
+                    Don&apos;t have an account? Sign Up
+                  </Link>
+                </div>
               </div>
-              <input
-                type="email"
-                className="input input-bordered w-full pl-10 py-2 text-lg"
-                placeholder="you@example.com"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              />
             </div>
-          </div>
 
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text font-medium">Password</span>
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Lock className="h-5 w-5 text-gray-400" />
+            {/* Illustration */}
+            <div className="hidden md:w-1/2 md:flex items-center justify-center p-8 bg-gradient-to-bl from-slate-800/20 to-transparent">
+              <div>
+                <img
+                  src="/login.png"
+                  alt="People using mobile devices"
+                  className="w-full h-auto object-contain"
+                />
+                <div className="mt-4 text-center">
+                  <h3 className="text-xl font-medium text-cyan-400">Connect anytime, anywhere</h3>
+
+                  <div className="mt-4 flex justify-center gap-4">
+                    <span className="auth-badge">Free</span>
+                    <span className="auth-badge">Easy Setup</span>
+                    <span className="auth-badge">Private</span>
+                  </div>
+                </div>
               </div>
-              <input
-                type={showPassword ? "text" : "password"}
-                className="input input-bordered w-full pl-10 py-2 text-lg"
-                placeholder="••••••••"
-                value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              />
-              <button
-                type="button"
-                className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <EyeOff className="h-5 w-5 text-gray-400" />
-                ) : (
-                  <Eye className="h-5 w-5 text-gray-400" />
-                )}
-              </button>
             </div>
           </div>
-
-          <button
-            type="submit"
-            className="btn btn-primary w-full py-2 text-lg rounded-lg"
-            disabled={isLoggingIn}
-          >
-            {isLoggingIn ? (
-              <>
-                <Loader2 className="h-5 w-5 animate-spin" />
-                Loading...
-              </>
-            ) : (
-              "Sign in"
-            )}
-          </button>
-        </form>
-
-        <div className="text-center mt-6">
-          <p className="text-gray-500">
-            Don&apos;t have an account?{" "}
-            <Link to="/signup" className="text-primary font-medium">
-              Create account
-            </Link>
-          </p>
-        </div>
+        </BorderAnimatedContainer>
       </div>
     </div>
   );
